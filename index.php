@@ -64,15 +64,16 @@
       while ($row = mysqli_fetch_assoc($result)) {
         // echo $row['category_id'];
         // echo $row['category_name'];
+  $id = $row['category_id'];
         $cat = $row['category_name'];
         $des = $row['category_description'];  
         echo '<div class="col-md-4 my-2">
         <div class="card" style="width: 18rem;">
           <img src="https://source.unsplash.com/500x400/?' . $cat . ',pythoncode" alt="image">
           <div class="card-body">
-            <h5 class="card-title">' . $cat . '</h5>
+            <h5 class="card-title"><a href="threadlist.php?catid='.$id.'">' . $cat .'</a> </h5>
             <p class="card-text text-justify">'.substr($des, 0,60).'......</p>
-            <a href="#" class="btn btn-primary">View Threads</a>
+            <a href="threadlist.php?catid='.$id.'" class="btn btn-primary">View Threads</a>
           </div>
         </div>
       </div>';
