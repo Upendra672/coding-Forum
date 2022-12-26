@@ -27,13 +27,13 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="https://source.unsplash.com/2400x700/?nature,island" class="d-block w-100" alt="img">
+        <img src="https://source.unsplash.com/2400x900/?coding,computer-languages" class="d-block w-100" alt="img">
       </div>
       <div class="carousel-item">
-        <img src="https://source.unsplash.com/2400x700/?valley,c++" class="d-block w-100" alt="img">
+        <img src="https://source.unsplash.com/2400x900/?random,computer" class="d-block w-100" alt="img">
       </div>
       <div class="carousel-item">
-        <img src="https://source.unsplash.com/2400x700/?mountain,water" class="d-block w-100" alt="img">
+        <img src="https://source.unsplash.com/2400x900/?codingquestions,DSA" class="d-block w-100" alt="img">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev">
