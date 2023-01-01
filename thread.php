@@ -65,7 +65,7 @@
         <li>Share your knowledge. ...</li>
         <li>Refrain from demeaning, discriminatory, or harassing behaviour and speech.</li>
         <br> 
-        <p><b>Posted by Upendra</b></p>
+        <p>Posted by <b>Upendra</b></p>
         </div>
         </div>'
         

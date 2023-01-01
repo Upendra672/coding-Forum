@@ -1,3 +1,5 @@
+
+
 <!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary">
   Launch demo modal
@@ -15,24 +17,25 @@
             </div>
             <div class="modal-body">
                 <!-- form -->
-                <form>
+                
+                <form action ="../_handleSignup.php" method="post">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Full Name</label>
-                        <input type="text" class="form-control" name="fname" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="fname">Full Name</label>
+                        <input type="text" class="form-control" name="fname" id="fname">
                         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="signupEmail">Email address</label>
+                        <input type="email" class="form-control" name="signupEmail" id="signupEmail" >
                         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" class="form-control" name="signupPassword" id="signupPassword">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Confirm Password</label>
-                        <input type="password" class="form-control" name="cpassword" id="exampleInputPassword1">
+                        <label for="signupcPassword">Confirm Password</label>
+                        <input type="password" class="form-control" name="signupcPassword" id="signupcPassword">
                     </div>
                     <!-- <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
