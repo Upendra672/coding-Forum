@@ -18,7 +18,7 @@
             <div class="modal-body">
                 <!-- form -->
                 
-                <form action ="../_handleSignup.php" method="post">
+                <form action ="/PHP_LEARNING/46_FORUM/partials/_handlesignup.php" method="post">
                     <div class="form-group">
                         <label for="fname">Full Name</label>
                         <input type="text" class="form-control" name="fname" id="fname">
