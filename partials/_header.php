@@ -17,19 +17,24 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       </li>
       <li class="nav-item dropdown active">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          Topics
+          Top Categories
         </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+        <div class="dropdown-menu">';
+        $sql = "SELECT category_name, category_id FROM `category` LIMIT 4";
+        $result = mysqli_query($conn, $sql); 
+        while($row = mysqli_fetch_assoc($result)){
+          echo '<a class="dropdown-item" href="threadlist.php?catid='. $row['category_id']. '">' . $row['category_name']. '</a>'; 
+        } 
+        echo '</div>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="./contact.php">Contact</a>
-      </li>
+      <a class="nav-link" href="contact.php" >Contact</a>
+    </li>
     </ul>
+    <form class="form-inline my-2 my-lg-0" method="get" action="search.php">
+      <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
     <div class="row mx-2">';
 
     if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
@@ -38,8 +43,8 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <button class="btn btn-outline-primary mx-2 "><a href="partials/_logout.php">Logout</a></button>';
     }
 else{
-  echo '<button class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#loginmodel">Login</button>
-  <button class="btn btn-outline-success mrx-2" data-toggle="modal" data-target="#signupmodel">Signup</button>';
+  echo '<button class="btn btn-primary mx-2" data-toggle="modal" data-target="#loginmodel">Login</button>
+  <button class="btn btn-primary mrx-2" data-toggle="modal" data-target="#signupmodel">Signup</button>';
 }
     echo '</div>    
 </div>
@@ -57,7 +62,4 @@ if (isset($_GET['signupsuccess']) && $_GET['signupsuccess'] == "true") {
 }
 ?>
 
-<!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
+

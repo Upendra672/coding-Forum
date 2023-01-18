@@ -15,8 +15,8 @@
 <body>
 
   <!-- header nav -->
-  <?php include 'partials/_header.php';   ?>
   <?php include 'partials/_dbconnect.php';  ?>
+  <?php include 'partials/_header.php';   ?>
 
   <!-- header carousel -->
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">

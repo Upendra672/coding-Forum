@@ -15,8 +15,8 @@
 <body>
 
     <!-- header nav -->
-    <?php include 'partials/_header.php';   ?>
     <?php include 'partials/_dbconnect.php';  ?>
+    <?php include 'partials/_header.php';   ?>
 
 <!-- jambotron php -->
     <?php
@@ -44,6 +44,8 @@
     if ($method == 'POST') {
         $th_comment = $_POST['comment'];
         $user_id = $_POST['user_id'];
+        $th_comment = str_replace("<", "&lt;", $th_comment);
+        $th_comment = str_replace(">", "&gt;", $th_comment); 
         $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`) VALUES ( '$th_comment', '$id', '$user_id')";
         $result = mysqli_query($conn, $sql);
         $showALert = true;
@@ -127,8 +129,8 @@ if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
         if ($noresult) {
             echo '<div class="jumbotron jumbotron-fluid">
             <div class="container">
-              <p class="display-4">No Thread Found</p>
-              <p class="lead">Be the first person to ask a question.</p>
+              <p class="display-4">No Comments Found</p>
+              <p class="lead">Be the first person to answer the question.</p>
             </div>
           </div>';
         }

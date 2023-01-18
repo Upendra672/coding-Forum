@@ -15,8 +15,8 @@
 <body>
 
     <!-- header nav -->
-    <?php include 'partials/_header.php';   ?>
     <?php include 'partials/_dbconnect.php';  ?>
+    <?php include 'partials/_header.php';   ?>
 
 
 <!-- php for jumbotron -->
@@ -39,6 +39,13 @@
         $th_title = $_POST['title'];
         $th_desc = $_POST['desc'];
         $user_id = $_POST['user_id'];
+
+        $th_title = str_replace("<", "&lt;", $th_title);
+        $th_title = str_replace(">", "&gt;", $th_title); 
+
+        $th_desc = str_replace("<", "&lt;", $th_desc);
+        $th_desc = str_replace(">", "&gt;", $th_desc); 
+        
         $sql = "INSERT INTO `thread` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`) VALUES ('$th_title', '$th_desc', '$id', '$user_id')";
         $result = mysqli_query($conn, $sql);
         $showALert = true;
