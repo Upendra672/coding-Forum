@@ -26,6 +26,13 @@
     while ($row = mysqli_fetch_assoc($result)) {
         $title = $row['thread_title'];
         $desc = $row['thread_desc'];
+        $thread_user_id = $row['thread_user_id'];
+
+        // Query the users table to find out the name of OP
+        $sql2 = "SELECT * FROM `users` WHERE user_id='$thread_user_id'";
+        $result2 = mysqli_query($conn, $sql2);
+        $row2 = mysqli_fetch_assoc($result2);
+        $posted_by = $row2['name'];
     }
 
     ?>
@@ -36,7 +43,8 @@
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
         $th_comment = $_POST['comment'];
-        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`) VALUES ( '$th_comment', '$id', '0')";
+        $user_id = $_POST['user_id'];
+        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`) VALUES ( '$th_comment', '$id', '$user_id')";
         $result = mysqli_query($conn, $sql);
         $showALert = true;
         if ($showALert) {
@@ -51,41 +59,42 @@
     ?>
 
     <!-- Categories  -->
-    <?php
-
-    echo '<div class="container my-4">
-    <div class="jumbotron">
-        <h1 class="display-6">Title: ' . $title . '</h1>
-        <p class="lead">Description: <br>' . $desc . '</p>
-        <hr class="my-4">
-        <p>This is a peer to peer forum Platform to share knowledge to each other</p>
-        <li>Keep it friendly.</li>
-        <li>Be courteous and respectful. Appreciate that others may have an opinion different from yours.</li>
-        <li>Stay on topic.</li>
-        <li>Share your knowledge. ...</li>
-        <li>Refrain from demeaning, discriminatory, or harassing behaviour and speech.</li>
-        <br> 
-        <p>Posted by <b>Upendra</b></p>
+     <!-- Category container starts here -->
+     <div class="container my-4">
+        <div class="jumbotron">
+            <h1 class="display-4"><?php echo 'Title: '.$title.'';?></h1>
+            <p class="lead">  <?php echo $desc;?></p>
+            <hr class="my-4">
+            <p>This is a peer to peer forum. No Spam / Advertising / Self-promote in the forums is not allowed. Do not post copyright-infringing material. Do not post “offensive” posts, links or images. Do not cross post questions. Remain respectful of other members at all times.</p>
+            <p>Posted by: <em><?php echo $posted_by; ?></em></p>
         </div>
-        </div>'
-        
-        ?>
-
-
-
-
-    <!-- form -->
-    <div class="container my-3">
-        <h1>Post a Comment</h1>
-
-        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post">
-            <div class="form-group">
-                <label for="comment">Type Your comment</label>
-                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-success">Post Comment</button>
-        </form>
     </div>
+
+
+
+
+<?php
+if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
+
+    echo '<div class="container my-3">
+         <h1>Post Your Answer</h1>
+ 
+         <form action="' . $_SERVER['REQUEST_URI'] . '" method="post">
+         <div class="form-group">
+         <label for="comment">Type Your comment</label>
+         <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+         <input type="hidden" name="user_id" value="'.$_SESSION["user_id"].'">
+     </div>
+     <button type="submit" class="btn btn-success">Post Comment</button>
+ </form>';
+}
+    else{
+        echo '<div class="container">
+        <h1>Post Your Answer</h1>
+        <p class="lead">You are not loggedIn Please Login to start a discussion.</p>
+        </div>';
+    }
+?>
 
     <!-- container -->
      <div class="container">
@@ -100,12 +109,16 @@
             $noresult = false;
             $id = $row['comment_id'];
             $content = $row['comment_content'];
-         $comment_time = $row['comment_time'];
+            $comment_time = $row['comment_time'];
+            $comment_by = $row['comment_by'];
+            $sql2 = 'SELECT name FROM `users` WHERE user_id= '. $comment_by.'';
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2);
         
             echo '<div class="media my-3">
            <img src="./img/user.jpg" width="50px" class="mr-3" alt="...">
            <div class="media-body">
-           <p class="font-weight-bold my-0">Anonymous users at '.$comment_time.'</p>
+           <p class="font-weight-bold my-0">'. $row2['name'].' at '.$comment_time.'</p>
            '.$content.'
            </div>
        </div>';

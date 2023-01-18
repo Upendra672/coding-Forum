@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <a class="navbar-brand" href="./index.php">SMILE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,18 +30,31 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <a class="nav-link" href="./contact.php">Contact</a>
       </li>
     </ul>
-    <div class="row mx-2">
-    
-    <button class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#loginmodel">Login</button>
-    <button class="btn btn-outline-success mrx-2" data-toggle="modal" data-target="#signupmodel">Signup</button>
-    </div>    
+    <div class="row mx-2">';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
+    echo '
+    <button class="btn btn-primary mx-2">Welcome '.$_SESSION['name'].'</button>
+    <button class="btn btn-outline-primary mx-2 "><a href="partials/_logout.php">Logout</a></button>';
+    }
+else{
+  echo '<button class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#loginmodel">Login</button>
+  <button class="btn btn-outline-success mrx-2" data-toggle="modal" data-target="#signupmodel">Signup</button>';
+}
+    echo '</div>    
 </div>
 </nav>';
 
 include '_loginmodel.php';
 include '_signupmodel.php';
-
-
+if (isset($_GET['signupsuccess']) && $_GET['signupsuccess'] == "true") {
+  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+            <strong>Success!</strong> You can now login
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>';
+}
 ?>
 
 <!-- <form class="form-inline my-2 my-lg-0">

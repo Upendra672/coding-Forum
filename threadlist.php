@@ -32,12 +32,14 @@
 
 <!-- form php -->
 <?php
+
     $showALert = false;
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == 'POST') {
         $th_title = $_POST['title'];
         $th_desc = $_POST['desc'];
-        $sql = "INSERT INTO `thread` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`) VALUES ('$th_title', '$th_desc', '$id', '0')";
+        $user_id = $_POST['user_id'];
+        $sql = "INSERT INTO `thread` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`) VALUES ('$th_title', '$th_desc', '$id', '$user_id')";
         $result = mysqli_query($conn, $sql);
         $showALert = true;
         if ($showALert) {
@@ -73,24 +75,34 @@
     ?>
 
     
+<?php
+if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
 
-    <!-- form -->
-    <div class="container my-3">
+    echo '<div class="container my-3">
+         <h1>Ask a Questions</h1>
+ 
+         <form action="'.$_SERVER['REQUEST_URI'].'" method="post">
+             <div class="form-group">
+                 <label for="title">Problem Title</label>
+                 <input type="text" class="form-control" id="title" name="title" aria-describedby="title" placeholder="Enter Title">
+                 <small id="emailHelp" class="form-text text-muted">Keep your title as short as possible.</small>
+                 <input type="hidden" name="user_id" value="'.$_SESSION["user_id"].'">
+             </div>
+             <div class="form-group">
+                 <label for="desc">Elaborate Your Problem</label>
+                 <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+             </div>
+             <button type="submit" class="btn btn-success">Submit</button>
+         </form>
+     </div>';
+}
+    else{
+        echo '<div class="container">
         <h1>Ask a Questions</h1>
-
-        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post">
-            <div class="form-group">
-                <label for="title">Problem Title</label>
-                <input type="text" class="form-control" id="title" name="title" aria-describedby="title" placeholder="Enter Title">
-                <small id="emailHelp" class="form-text text-muted">Keep your title as short as possible.</small>
-            </div>
-            <div class="form-group">
-                <label for="desc">Elaborate Your Problem</label>
-                <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-success">Submit</button>
-        </form>
-    </div>
+        <p class="lead">You are not loggedIn Please Login to start a discussion.</p>
+        </div>';
+    }
+?>
 
     <!-- container -->
     <div class="container">
@@ -108,11 +120,19 @@
             $thtitle = $row['thread_title'];
             $thdesc = $row['thread_desc'];
             $thread_time = $row['timestamp'];
+            $thread_user_id = $row['thread_user_id'];
+
+            
+            $sql2 = 'SELECT * FROM `users` WHERE user_id= '.$thread_user_id.'';
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2);
+            $name = $row2['name'];
+           
 
             echo '<div class="media my-3">
             <img src="./img/user.jpg" width="50px" class="mr-3" alt="...">
             <div class="media-body">
-            <p class="font-weight-bold my-0">Anonymous users at '.$thread_time.'</p>
+            <p class="font-weight-bold my-0">'.$name.' at '.$thread_time.'</p>
                 <h5 class="mt-0"><a href="thread.php?threadid=' . $thid . '">' . $thtitle . '</a></h5>
                 <p>' . $thdesc . '</p>
             </div>
